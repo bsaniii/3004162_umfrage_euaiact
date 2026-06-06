@@ -48,6 +48,13 @@ app.post('/api/save', (req, res) => {
   res.json({ ok: true });
 });
 
+app.get('/admin/data', (req, res) => {
+  if (req.query.token !== (process.env.ADMIN_TOKEN || 'admin123')) {
+    return res.status(401).send('Nicht autorisiert');
+  }
+  res.json(load());
+});
+
 app.get('/admin/export', async (req, res) => {
   if (req.query.token !== (process.env.ADMIN_TOKEN || 'admin123')) {
     return res.status(401).send('Nicht autorisiert');
