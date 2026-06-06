@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Umfrage EU AI Act</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--p:#534AB7;--pl:#EEEDFE;--pd:#3C3489;--t:#0F6E56;--tl:#E1F5EE;--text:#1a1a1a;--mut:#6b6b6b;--hint:#9b9b9b;--bg:#fff;--surf:#f5f5f4;--brd:rgba(0,0,0,0.1);--r:8px;--rl:12px;
+  --c1:#534AB7;--c2:#0F6E56;--c3:#C05621;--c4:#1a6b9a;--c5:#7B2D8B;--c6:#B7791F}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--surf);color:var(--text);min-height:100vh;padding:24px 16px}
+.top{max-width:1100px;margin:0 auto 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:gap}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:36px;height:36px;background:var(--p);border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
+.brand-text h2{font-size:16px;font-weight:600;color:var(--text)}
+.brand-text p{font-size:12px;color:var(--mut)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{padding:9px 18px;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid rgba(0,0,0,0.2);background:var(--bg);color:var(--text);font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:6px}
+.btn:hover{background:var(--surf)}
+.btn-p{background:var(--p);color:#fff;border-color:var(--p)}.btn-p:hover{background:var(--pd)}
+.btn-g{background:var(--t);color:#fff;border-color:var(--t)}.btn-g:hover{background:#0a5240}
+.wrap{max-width:1100px;margin:0 auto}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--bg);border:0.5px solid var(--brd);border-radius:var(--rl);padding:16px 18px}
+.stat-label{font-size:11px;color:var(--mut);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.stat-val{font-size:28px;font-weight:600;color:var(--text)}
+.stat-sub{font-size:12px;color:var(--hint);margin-top:2px}
+.section{margin-bottom:32px}
+.section-title{font-size:13px;font-weight:500;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;padding-bottom:8px;border-bottom:0.5px solid var(--brd)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.card{background:var(--bg);border:0.5px solid var(--brd);border-radius:var(--rl);padding:20px}
+.card-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:14px;line-height:1.4}
+.bar-item{margin-bottom:8px}
+.bar-label{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-bottom:3px}
+.bar-label span:first-child{max-width:75%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{height:6px;background:var(--surf);border-radius:3px;overflow:hidden}
+.bar-fill{height:6px;border-radius:3px;transition:width .6s ease}
+.chart-wrap{position:relative;height:220px}
+.likert-wrap{overflow-x:auto}
+.likert-table{width:100%;border-collapse:collapse;font-size:12px}
+.likert-table th{text-align:left;padding:6px 8px;color:var(--mut);font-weight:500;border-bottom:0.5px solid var(--brd)}
+.likert-table td{padding:6px 8px;border-bottom:0.5px solid var(--brd)}
+.likert-table td:first-child{color:var(--text);max-width:220px}
+.likert-avg{font-weight:600;color:var(--p)}
+.mini-bar{display:flex;gap:1px;height:14px;border-radius:2px;overflow:hidden;margin-top:4px}
+.mini-seg{height:14px;transition:width .4s}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--mut)}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.empty{text-align:center;padding:48px 24px;color:var(--hint);font-size:14px}
+.loading{text-align:center;padding:48px 24px;color:var(--mut);font-size:14px}
+.token-wrap{background:var(--bg);border:0.5px solid var(--brd);border-radius:var(--rl);padding:24px;max-width:400px;margin:80px auto;text-align:center}
+.token-wrap h2{font-size:18px;font-weight:600;margin-bottom:8px}
+.token-wrap p{font-size:14px;color:var(--mut);margin-bottom:16px}
+.token-input{width:100%;padding:10px 12px;border:0.5px solid var(--brd);border-radius:var(--r);font-size:14px;font-family:inherit;outline:none;margin-bottom:10px}
+.token-input:focus{border-color:var(--p);box-shadow:0 0 0 3px var(--pl)}
+.err-msg{color:#D85A30;font-size:13px;margin-top:8px}
+@media(max-width:600px){.cards{grid-template-columns:1fr}.top{flex-direction:column;align-items:flex-start;gap:12px}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var COLORS=['#534AB7','#0F6E56','#C05621','#1a6b9a','#7B2D8B','#B7791F','#2D6A4F','#E63946'];
+var TOKEN=localStorage.getItem('admin_token')||'';
+var data=[];
+
+var QUESTIONS={
+  size:{label:'Unternehmensgröße',type:'r'},
+  role:{label:'Funktion im Unternehmen',type:'r'},
+  sector:{label:'Branche',type:'r'},
+  ai:{label:'KI-Einsatz',type:'r'},
+  know:{label:'Kenntnisstand EU AI Act',type:'r'},
+  riskclass:{label:'Risikoklassifizierung bekannt',type:'r'},
+  compliance:{label:'Compliance-Status',type:'r'},
+  bbawar:{label:'Black-Box-Bewusstsein',type:'r'},
+  xai:{label:'Genutzte XAI-Methoden',type:'c'},
+  barrier:{label:'Größte Compliance-Hürde',type:'r'},
+  support:{label:'Gewünschte Unterstützung',type:'c'},
+  feas:{label:'Technische Umsetzbarkeit',type:'r'},
+  opinion:{label:'Bewertung EU AI Act',type:'r'},
+  lk1:{label:'Likert: Black-Box-Herausforderungen',type:'l',
+    items:['Die Intransparenz unserer KI-Systeme erschwert die EU AI Act-Erfullung erheblich.',
+           'Verfugbare XAI-Methoden reichen fur die Transparenzanforderungen aus.',
+           'Das Black-Box-Problem mindert das Kundenvertrauen in unsere KI-Systeme.',
+           'Wir sind bereit, Modellleistung zugunsten besserer Interpretierbarkeit zu opfern.']},
+  lk2:{label:'Likert: Compliance-Herausforderungen',type:'l',
+    items:['Fehlende technische Standards fur Erklarbarkeit','Unklare rechtliche Anforderungen',
+           'Mangelndes internes Fachwissen','Hoher Aufwand fur technische Dokumentation',
+           'Fehlende Tools zur Konformitatsbewertung','Wirtschaftliche Kosten der Compliance']},
+  lk3:{label:'Likert: Zukunftseinschätzungen',type:'l',
+    items:['Erklarbare KI wird in den nachsten 3 Jahren zum Standard in unserer Branche.',
+           'Der EU AI Act wird die Qualitat von KI-Systemen in der EU verbessern.',
+           'Unternehmen ohne EU AI Act-Compliance werden erhebliche Wettbewerbsnachteile haben.']}
+};
+
+function showLogin(){
+  document.getElementById('root').innerHTML=
+    '<div class="token-wrap">'
+    +'<div class="logo" style="margin:0 auto 16px;width:44px;height:44px"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>'
+    +'<h2>Admin-Zugang</h2>'
+    +'<p>Bitte Admin-Token eingeben</p>'
+    +'<input class="token-input" type="password" id="tok" placeholder="Token..." onkeydown="if(event.key===\'Enter\')doLogin()">'
+    +'<button class="btn btn-p" style="width:100%" onclick="doLogin()">Anmelden</button>'
+    +'<div class="err-msg" id="login-err"></div>'
+    +'</div>';
+}
+
+function doLogin(){
+  var t=document.getElementById('tok').value.trim();
+  if(!t){document.getElementById('login-err').textContent='Bitte Token eingeben.';return;}
+  TOKEN=t;
+  localStorage.setItem('admin_token',t);
+  loadData();
+}
+
+function loadData(){
+  document.getElementById('root').innerHTML='<div class="loading">Daten werden geladen...</div>';
+  fetch('/admin/data?token='+encodeURIComponent(TOKEN))
+    .then(function(r){
+      if(r.status===401){TOKEN='';localStorage.removeItem('admin_token');showLogin();document.getElementById('login-err') && (document.getElementById('login-err').textContent='Falscher Token.');return null;}
+      return r.json();
+    })
+    .then(function(d){if(d){data=d;renderDashboard();}})
+    .catch(function(){document.getElementById('root').innerHTML='<div class="empty">Fehler beim Laden der Daten.</div>';});
+}
+
+function freq(answers,key,type){
+  var counts={};
+  answers.forEach(function(r){
+    var v=r.answers&&r.answers[key];
+    if(!v)return;
+    if(type==='c'&&Array.isArray(v)){v.forEach(function(x){counts[x]=(counts[x]||0)+1;});}
+    else if(typeof v==='string'){counts[v]=(counts[v]||0)+1;}
+  });
+  return counts;
+}
+
+function avgLikert(answers,key,item){
+  var sum=0,n=0;
+  answers.forEach(function(r){
+    var obj=r.answers&&r.answers[key];
+    if(obj&&obj[item]){var v=parseInt(obj[item]);if(!isNaN(v)){sum+=v;n++;}}
+  });
+  return n>0?(sum/n).toFixed(2):'-';
+}
+
+function renderDashboard(){
+  var completed=data.filter(function(r){return r.completed;});
+  var partial=data.filter(function(r){return!r.completed;});
+  var rate=data.length>0?Math.round(completed.length/data.length*100):0;
+
+  var h='<div class="top">'
+    +'<div class="brand"><div class="logo"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>'
+    +'<div class="brand-text"><h2>Umfrage-Auswertung</h2><p>Black Box vs. Compliance &middot; Bahar Sanl&#305;alp &middot; TH Mannheim</p></div></div>'
+    +'<div class="actions">'
+    +'<button class="btn" onclick="loadData()">&#8635; Aktualisieren</button>'
+    +'<a href="/admin/export?token='+encodeURIComponent(TOKEN)+'" class="btn btn-g">&#8595; Excel exportieren</a>'
+    +'<button class="btn" onclick="TOKEN=\'\';localStorage.removeItem(\'admin_token\');showLogin()">Abmelden</button>'
+    +'</div></div>';
+
+  h+='<div class="wrap">';
+
+  // Stats
+  h+='<div class="stats-row">'
+    +'<div class="stat-card"><div class="stat-label">Gesamt Teilnahmen</div><div class="stat-val">'+data.length+'</div><div class="stat-sub">inkl. Abbrüche</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Abgeschlossen</div><div class="stat-val">'+completed.length+'</div><div class="stat-sub">vollständig ausgefüllt</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Abschlussquote</div><div class="stat-val">'+rate+'%</div><div class="stat-sub">'+partial.length+' abgebrochen</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Letzter Eintrag</div><div class="stat-val" style="font-size:16px;padding-top:4px">'+(data.length>0?new Date(data[data.length-1].lastUpdated).toLocaleDateString('de-DE'):'-')+'</div><div class="stat-sub">&nbsp;</div></div>'
+    +'</div>';
+
+  if(data.length===0){
+    h+='<div class="empty">Noch keine Antworten vorhanden.</div></div>';
+    document.getElementById('root').innerHTML=h;
+    return;
+  }
+
+  var allAnswers=data;
+
+  // Abschnitt 1-2: Einfache Radio-Fragen als Balken
+  var radioKeys=['size','role','sector','ai','know','riskclass','compliance','bbawar','barrier','feas','opinion'];
+  var sections=[
+    {title:'Abschnitt 1 – Unternehmen',keys:['size','role','sector','ai']},
+    {title:'Abschnitt 2 – EU AI Act',keys:['know','riskclass','compliance']},
+    {title:'Abschnitt 3 – Black-Box-Problem',keys:['bbawar','xai']},
+    {title:'Abschnitt 4 – Herausforderungen',keys:['barrier','support']},
+    {title:'Abschnitt 5 – Ausblick',keys:['feas','opinion']}
+  ];
+
+  sections.forEach(function(sec){
+    h+='<div class="section"><div class="section-title">'+sec.title+'</div><div class="cards">';
+    sec.keys.forEach(function(key){
+      var q=QUESTIONS[key];if(!q)return;
+      if(q.type==='r'||q.type==='c'){
+        var counts=freq(allAnswers,key,q.type);
+        var total=Object.values(counts).reduce(function(a,b){return a+b;},0);
+        if(total===0){h+='<div class="card"><div class="card-title">'+q.label+'</div><div style="font-size:12px;color:var(--hint)">Keine Antworten</div></div>';return;}
+        h+='<div class="card"><div class="card-title">'+q.label+'</div>';
+        var sorted=Object.entries(counts).sort(function(a,b){return b[1]-a[1];});
+        sorted.forEach(function(pair,i){
+          var label=pair[0],count=pair[1];
+          var pct=Math.round(count/total*100);
+          var color=COLORS[i%COLORS.length];
+          h+='<div class="bar-item">'
+            +'<div class="bar-label"><span>'+label+'</span><span>'+count+' ('+pct+'%)</span></div>'
+            +'<div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:'+color+'"></div></div>'
+            +'</div>';
+        });
+        h+='</div>';
+      }
+    });
+    h+='</div></div>';
+  });
+
+  // Likert-Abschnitte
+  var likertKeys=['lk1','lk2','lk3'];
+  h+='<div class="section"><div class="section-title">Likert-Skalen (1 = stimme gar nicht zu, 5 = stimme voll zu)</div><div class="cards">';
+  likertKeys.forEach(function(key){
+    var q=QUESTIONS[key];if(!q)return;
+    h+='<div class="card"><div class="card-title">'+q.label+'</div><div class="likert-wrap"><table class="likert-table">'
+      +'<thead><tr><th>Aussage</th><th>Ø</th><th style="min-width:120px">Verteilung</th></tr></thead><tbody>';
+    q.items.forEach(function(item){
+      var avg=avgLikert(allAnswers,key,item);
+      // Verteilung 1-5
+      var dist={};
+      allAnswers.forEach(function(r){var obj=r.answers&&r.answers[key];if(obj&&obj[item])dist[obj[item]]=(dist[obj[item]]||0)+1;});
+      var total=Object.values(dist).reduce(function(a,b){return a+b;},0);
+      var miniBar='<div class="mini-bar">';
+      ['1','2','3','4','5'].forEach(function(v,i){
+        var pct=total>0?Math.round((dist[v]||0)/total*100):0;
+        if(pct>0) miniBar+='<div class="mini-seg" style="width:'+pct+'%;background:'+COLORS[i]+';" title="'+v+': '+pct+'%"></div>';
+      });
+      miniBar+='</div>';
+      var shortItem=item.length>50?item.slice(0,50)+'...':item;
+      h+='<tr><td title="'+item+'">'+shortItem+'</td><td class="likert-avg">'+avg+'</td><td>'+miniBar+'</td></tr>';
+    });
+    h+='</tbody></table>';
+    h+='<div class="legend">';
+    ['1','2','3','4','5'].forEach(function(v,i){h+='<div class="legend-item"><div class="legend-dot" style="background:'+COLORS[i]+'"></div>'+v+'</div>';});
+    h+='</div></div></div>';
+  });
+  h+='</div></div>';
+
+  // Charts Section
+  h+='<div class="section"><div class="section-title">Diagramme</div><div class="cards" id="charts-container"></div></div>';
+  h+='</div>';
+
+  document.getElementById('root').innerHTML=h;
+
+  // Charts rendern
+  var chartKeys=['ai','compliance','bbawar','feas','opinion'];
+  var container=document.getElementById('charts-container');
+  chartKeys.forEach(function(key,idx){
+    var q=QUESTIONS[key];if(!q)return;
+    var counts=freq(allAnswers,key,'r');
+    var labels=Object.keys(counts);
+    var values=Object.values(counts);
+    if(labels.length===0)return;
+    var div=document.createElement('div');div.className='card';
+    var title=document.createElement('div');title.className='card-title';title.textContent=q.label;
+    var wrap=document.createElement('div');wrap.className='chart-wrap';
+    var canvas=document.createElement('canvas');
+    wrap.appendChild(canvas);div.appendChild(title);div.appendChild(wrap);
+    container.appendChild(div);
+    new Chart(canvas,{
+      type:'doughnut',
+      data:{
+        labels:labels,
+        datasets:[{data:values,backgroundColor:COLORS.slice(0,labels.length),borderWidth:2,borderColor:'#fff'}]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{
+          legend:{position:'right',labels:{font:{size:11},boxWidth:12,padding:8}},
+          tooltip:{callbacks:{label:function(ctx){var total=ctx.dataset.data.reduce(function(a,b){return a+b;},0);return ctx.label+': '+ctx.raw+' ('+Math.round(ctx.raw/total*100)+'%)';}}}}
+      }
+    });
+  });
+}
+
+if(TOKEN){loadData();}else{showLogin();}
+</script>
+</body>
+</html>
