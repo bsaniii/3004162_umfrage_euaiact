@@ -1,66 +1,127 @@
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const ExcelJS = require('exceljs');
 const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const DATA_FILE = path.join(__dirname, 'data', 'responses.json');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+const responseSchema = new mongoose.Schema({
+  sessionId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  step: {
+    type: Number,
+    default: 0
+  },
+  answers: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
+  },
+  completed: {
+    type: Boolean,
+    default: false
+  },
+  lastUpdated: {
+    type: Date,
+    default: Date.now
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-if (!fs.existsSync(path.join(__dirname, 'data'))) {
-  fs.mkdirSync(path.join(__dirname, 'data'));
-}
-if (!fs.existsSync(DATA_FILE)) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify([]));
-}
-
-function load() {
-  try { return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); }
-  catch { return []; }
-}
-function save(data) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-}
+const SurveyResponse = mongoose.model('SurveyResponse', responseSchema);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.post('/api/save', (req, res) => {
-  const { sessionId, step, answers, completed } = req.body;
-  if (!sessionId) return res.status(400).json({ error: 'Kein sessionId' });
-  const data = load();
-  const idx = data.findIndex(r => r.sessionId === sessionId);
-  const entry = {
-    sessionId,
-    step: step || 0,
-    answers: answers || {},
-    completed: !!completed,
-    lastUpdated: new Date().toISOString(),
-    createdAt: idx === -1 ? new Date().toISOString() : data[idx].createdAt
-  };
-  if (idx === -1) data.push(entry);
-  else data[idx] = entry;
-  save(data);
-  res.json({ ok: true });
+app.post('/api/save', async (req, res) => {
+  try {
+    const { sessionId, step, answers, completed } = req.body;
+
+    if (!sessionId) {
+      return res.status(400).json({
+        error: 'Keine sessionId'
+      });
+    }
+
+    const entry = await SurveyResponse.findOneAndUpdate(
+      { sessionId },
+      {
+        $set: {
+          step: step || 0,
+          answers: answers || {},
+          completed: !!completed,
+          lastUpdated: new Date()
+        },
+        $setOnInsert: {
+          sessionId,
+          createdAt: new Date()
+        }
+      },
+      {
+        new: true,
+        upsert: true,
+        runValidators: true
+      }
+    );
+
+    res.json({
+      ok: true,
+      id: entry._id
+    });
+  } catch (error) {
+    console.error('Fehler beim Speichern:', error);
+
+    res.status(500).json({
+      error: 'Antwort konnte nicht gespeichert werden'
+    });
+  }
 });
 
-app.get('/admin/data', (req, res) => {
-  if (req.query.token !== (process.env.ADMIN_TOKEN || 'admin123')) {
-    return res.status(401).send('Nicht autorisiert');
+app.get('/admin/data', async (req, res) => {
+  try {
+    if (
+      !process.env.ADMIN_TOKEN ||
+      req.query.token !== process.env.ADMIN_TOKEN
+    ) {
+      return res.status(401).send('Nicht autorisiert');
+    }
+
+    const data = await SurveyResponse
+      .find()
+      .sort({ createdAt: -1 })
+      .lean();
+
+    res.json(data);
+  } catch (error) {
+    console.error('Fehler beim Laden:', error);
+
+    res.status(500).send('Daten konnten nicht geladen werden');
   }
-  res.json(load());
 });
 
 app.get('/admin/export', async (req, res) => {
-  if (req.query.token !== (process.env.ADMIN_TOKEN || 'admin123')) {
-    return res.status(401).send('Nicht autorisiert');
-  }
-  const data = load();
+  try {
+    if (
+      !process.env.ADMIN_TOKEN ||
+      req.query.token !== process.env.ADMIN_TOKEN
+    ) {
+      return res.status(401).send('Nicht autorisiert');
+    }
+
+    const data = await SurveyResponse
+      .find()
+      .sort({ createdAt: 1 })
+      .lean();
+    
   const wb = new ExcelJS.Workbook();
   const ws = wb.addWorksheet('Antworten');
   const ws2 = wb.addWorksheet('Zusammenfassung');
@@ -131,8 +192,33 @@ app.get('/admin/export', async (req, res) => {
   res.setHeader('Content-Disposition', 'attachment; filename=umfrage_' + new Date().toISOString().slice(0,10) + '.xlsx');
   await wb.xlsx.write(res);
   res.end();
-});
+      } catch (error) {
+    console.error('Excel-Export fehlgeschlagen:', error);
 
-app.listen(PORT, () => {
-  console.log('Server läuft auf Port ' + PORT);
+    if (!res.headersSent) {
+      res.status(500).send('Excel-Datei konnte nicht erstellt werden');
+    }
+  }
+});
+});
+async function startServer() {
+  try {
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI wurde nicht gesetzt');
+    }
+
+    await mongoose.connect(process.env.MONGODB_URI);
+
+    console.log('MongoDB erfolgreich verbunden');
+
+    app.listen(PORT, () => {
+      console.log('Server läuft auf Port ' + PORT);
+    });
+  } catch (error) {
+    console.error('MongoDB-Verbindung fehlgeschlagen:', error);
+    process.exit(1);
+  }
+}
+
+startServer();
 });
