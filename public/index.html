@@ -116,65 +116,65 @@ var STEPS=[
      {title:'Was ist der EU AI Act?',text:'Der EU AI Act (Verordnung (EU) 2024/1689) ist das erste rechtsverbindliche KI-Gesetz der Welt. Er trat am 1. August 2024 in Kraft und verpflichtet Unternehmen, KI-Systeme in sogenannten Hochrisikobereichen (z.\u00a0B. Personalentscheidungen, Kreditvergabe, Medizin, Biometrie) transparent, dokumentiert und menschlich kontrollierbar zu gestalten.'},
      {title:'Was ist das Black-Box-Problem?',text:'Tiefe neuronale Netze (z.\u00a0B. CNNs, LSTMs, Transformer) erzielen herausragende Leistungen, treffen ihre Entscheidungen jedoch auf Basis von Millionen von Parametern, die f\u00fcr Menschen nicht direkt nachvollziehbar sind. Dieses Ph\u00e4nomen wird als Black-Box-Problem bezeichnet. Methoden der erkl\u00e4rbaren KI (XAI) wie SHAP, LIME oder Grad-CAM versuchen, diese Entscheidungen im Nachhinein zu erkl\u00e4ren.'}
    ],
-   notice:'Die Umfrage ist anonym. Fur das Gewinnspiel (1x10 Euro Wunschgutschein) konnen Sie optional Ihre E-Mail-Adresse angeben. Diese wird nicht mit Ihren Antworten verknupft.',
-   qs:[{id:'email',t:'email',label:'E-Mail-Adresse (optional - nur fur Gewinnspiel)',ph:'ihre@email.de'}]},
+   notice:'Die Umfrage ist anonym. Für das Gewinnspiel (1x10 Euro Wunschgutschein) können Sie optional Ihre E-Mail-Adresse angeben. Diese wird nicht mit Ihren Antworten verknüpft.',
+   qs:[{id:'email',t:'email',label:'E-Mail-Adresse (optional - nur für die Teilnahme am Gewinnspiel)',ph:'ihre@email.de'}]},
   {badge:'Abschnitt 1 - Unternehmen',title:'Angaben zum Unternehmen',qs:[
     {id:'size',t:'r',req:true,label:'Wie viele Mitarbeitende hat Ihr Unternehmen?',
      opts:['Kleinstunternehmen: unter 10 Mitarbeitende','Kleinunternehmen: 10-49 Mitarbeitende','Mittleres Unternehmen: 50-249 Mitarbeitende','Grossunternehmen: 250-999 Mitarbeitende','Konzern: 1.000-9.999 Mitarbeitende','Grosskonzern: 10.000 oder mehr Mitarbeitende']},
     {id:'role',t:'r',req:true,label:'Welche Funktion haben Sie in Ihrem Unternehmen?',
-     opts:['Softwareentwicklung / Data Science / ML Engineering','Technische Leitung / Architektur / CTO','Compliance / Recht / Datenschutz / Risk Management','Geschaftsfuhrung / C-Level Management','Produktmanagement / Projektleitung','Forschung & Entwicklung','Sonstige'],other:'role'},
-    {id:'sector',t:'r',req:true,label:'In welcher Branche ist Ihr Unternehmen hauptsachlich tatig?',
-     opts:['Software- / Technologieunternehmen (inkl. IT-Beratung)','Finanzdienstleistungen / FinTech / InsurTech','Gesundheitswesen / MedTech / Pharma','Automobilindustrie / Mobilitat','Industrie / Fertigung / Maschinenbau','Handel / E-Commerce / Konsumguter','Offentlicher Sektor / Behorden','Sonstige'],other:'sector'},
+     opts:['Softwareentwicklung / Data Science / ML Engineering','Technische Leitung / Architektur / CTO','Compliance / Recht / Datenschutz / Risk Management','Geschaftsführung / C-Level Management','Produktmanagement / Projektleitung','Forschung & Entwicklung','Sonstige'],other:'role'},
+    {id:'sector',t:'r',req:true,label:'In welcher Branche ist Ihr Unternehmen hauptsächlich tätig?',
+     opts:['Software- / Technologieunternehmen (inkl. IT-Beratung)','Finanzdienstleistungen / FinTech / InsurTech','Gesundheitswesen / MedTech / Pharma','Automobilindustrie / Mobilität','Industrie / Fertigung / Maschinenbau','Handel / E-Commerce / Konsumgüter','Öffentlicher Sektor / Behörden','Sonstige'],other:'sector'},
     {id:'ai',t:'r',req:true,label:'Setzt Ihr Unternehmen KI-Systeme produktiv ein?',
-     opts:['Ja, tiefe neuronale Netze (CNN, LSTM, Transformer, LLMs etc.)','Ja, andere KI-Verfahren (Entscheidungsbaume, klassisches ML, Regelbasierte Systeme)','Ja, beides - sowohl DNNs als auch klassische Verfahren','Nein, aber konkret geplant (innerhalb der nachsten 12 Monate)','Nein, keine KI-Systeme im Einsatz']}
+     opts:['Ja, tiefe neuronale Netze (CNN, LSTM, Transformer, LLMs etc.)','Ja, andere KI-Verfahren (Entscheidungsbäume, klassisches ML, Regelbasierte Systeme)','Ja, beides - sowohl DNNs als auch klassische Verfahren','Nein, aber konkret geplant (innerhalb der nächsten 12 Monate)','Nein, keine KI-Systeme im Einsatz']}
   ]},
   {badge:'Abschnitt 2 - EU AI Act',title:'Kenntnisstand zum EU AI Act',qs:[
-    {id:'know',t:'r',req:true,label:'Wie wurden Sie Ihren Kenntnisstand zum EU AI Act einschatzen?',
-     opts:['Experte: Gesetzestext gelesen, Details und Umsetzungsanforderungen bekannt','Fortgeschritten: Wesentliche Anforderungen, Risikoklassen und Pflichten bekannt','Grundlegend: Grundsatzliche Ziele bekannt, aber keine Detailkenntnisse','Anfanger: Name bekannt, kaum inhaltliche Kenntnisse','Kein Kenntnisstand: Kenne den EU AI Act nicht']},
+    {id:'know',t:'r',req:true,label:'Wie würden Sie Ihren Kenntnisstand zum EU AI Act einschätzen?',
+     opts:['Experte: Gesetzestext gelesen, Details und Umsetzungsanforderungen bekannt','Fortgeschritten: Wesentliche Anforderungen, Risikoklassen und Pflichten bekannt','Grundlegend: Grundsätzliche Ziele bekannt, aber keine Detailkenntnisse','Anfänger: Name bekannt, kaum inhaltliche Kenntnisse','Kein Kenntnisstand: Kenne den EU AI Act nicht']},
     {id:'riskclass',t:'r',req:true,label:'Wissen Sie, in welche Risikoklasse die KI-Systeme Ihres Unternehmens fallen?',
-     opts:['Ja, formale Klassifizierung wurde durchgefuhrt und dokumentiert','Ja, interne Einschatzung liegt vor, aber noch nicht formal dokumentiert','Teilweise - fur einige Systeme wurde eine Einstufung vorgenommen','Nein, noch nicht analysiert - ist aber geplant','Nein, noch nicht analysiert und kein Plan vorhanden','Nicht anwendbar - keine relevanten KI-Systeme im Einsatz']},
-    {id:'compliance',t:'r',req:true,label:'Wie wurden Sie den aktuellen Compliance-Stand Ihres Unternehmens einschatzen?',
-     opts:['Vollstandig konform - alle Anforderungen erfullt und dokumentiert','Weitgehend konform - grosser Teil umgesetzt, kleinere Lucken bekannt','In Arbeit - Compliance-Prozess lauft aktiv','Fruhphase - erste Massnahmen eingeleitet, aber noch am Anfang','Noch nicht begonnen - kein aktiver Compliance-Prozess','Nicht relevant - EU AI Act gilt nicht fur unsere Systeme']}
+     opts:['Ja, formale Klassifizierung wurde durchgeführt und dokumentiert','Ja, interne Einschätzung liegt vor, aber noch nicht formal dokumentiert','Teilweise - für einige Systeme wurde eine Einstufung vorgenommen','Nein, noch nicht analysiert - ist aber geplant','Nein, noch nicht analysiert und kein Plan vorhanden','Nicht anwendbar - keine relevanten KI-Systeme im Einsatz']},
+    {id:'compliance',t:'r',req:true,label:'Wie wurden Sie den aktuellen Compliance-Stand Ihres Unternehmens einschätzen?',
+     opts:['Vollständig konform - alle Anforderungen erfüllt und dokumentiert','Weitgehend konform - großer Teil umgesetzt, kleinere Lücken bekannt','In Arbeit - Compliance-Prozess läuft aktiv','Frühphase - erste Massnahmen eingeleitet, aber noch am Anfang','Noch nicht begonnen - kein aktiver Compliance-Prozess','Nicht relevant - EU AI Act gilt nicht für unsere Systeme']}
   ]},
   {badge:'Abschnitt 3 - Black-Box-Problem',title:'Umgang mit dem Black-Box-Problem',qs:[
     {id:'bbawar',t:'r',req:true,label:'Inwieweit ist das Black-Box-Problem tiefer neuronaler Netze in Ihrem Unternehmen ein bekanntes Thema?',
-     opts:['Zentrales Thema - wird aktiv auf Strategie- und Technikebene adressiert','Bekanntes Thema - wird diskutiert, aber nicht systematisch adressiert','Teilweise bekannt - einzelne Teams sind sensibilisiert, keine einheitliche Position','Kaum bekannt - nur Einzelpersonen haben Kenntnisse daruber','Nicht bekannt - kein Bewusstsein fur das Problem im Unternehmen']},
+     opts:['Zentrales Thema - wird aktiv auf Strategie- und Technikebene adressiert','Bekanntes Thema - wird diskutiert, aber nicht systematisch adressiert','Teilweise bekannt - einzelne Teams sind sensibilisiert, keine einheitliche Position','Kaum bekannt - nur Einzelpersonen haben Kenntnisse darüber','Nicht bekannt - kein Bewusstsein für das Problem im Unternehmen']},
     {id:'xai',t:'c',label:'Welche Methoden der erklarbaren KI (XAI) setzt Ihr Unternehmen ein? (Mehrfachauswahl)',
-     opts:['SHAP (SHapley Additive exPlanations)','LIME (Local Interpretable Model-Agnostic Explanations)','Grad-CAM (Gradient-weighted Class Activation Mapping)','Attention-Visualisierung (z.B. bei Transformer-Modellen)','Saliency Maps / Gradient-basierte Methoden','Kontrafaktische Erklarungen (Counterfactual Explanations)','Keine - wir setzen ausschliesslich interpretierbare Modelle ein','Keine XAI-Methoden im Einsatz','Nicht bekannt / bin nicht sicher','Sonstige'],other:'xai'},
+     opts:['SHAP (SHapley Additive exPlanations)','LIME (Local Interpretable Model-Agnostic Explanations)','Grad-CAM (Gradient-weighted Class Activation Mapping)','Attention-Visualisierung (z.B. bei Transformer-Modellen)','Saliency Maps / Gradient-basierte Methoden','Kontrafaktische Erklärungen (Counterfactual Explanations)','Keine - wir setzen ausschliesslich interpretierbare Modelle ein','Keine XAI-Methoden im Einsatz','Nicht bekannt / Ich bin mir nicht sicher','Sonstige'],other:'xai'},
     {id:'lk1',t:'l',label:'Wie stark stimmen Sie folgenden Aussagen zu?',
      hint:'1 = stimme gar nicht zu     5 = stimme voll zu',scale:['1','2','3','4','5'],
-     items:['Die Intransparenz unserer KI-Systeme erschwert die Erfullung der EU AI Act-Anforderungen erheblich.',
-            'Verfugbare XAI-Methoden reichen aus, um die Transparenzanforderungen des EU AI Acts zu erfullen.',
-            'Das Black-Box-Problem beeintrachtigt das Vertrauen unserer Kunden und Stakeholder in unsere KI-Systeme.',
-            'Wir priorisieren Modellleistung gegenuber Interpretierbarkeit, wenn beides nicht gleichzeitig erreichbar ist.']}
+     items:['Die Intransparenz unserer KI-Systeme erschwert die Erfüllung der EU AI Act-Anforderungen erheblich.',
+            'Verfügbare XAI-Methoden reichen aus, um die Transparenzanforderungen des EU AI Acts zu erfüllen.',
+            'Das Black-Box-Problem beeinträchtigt das Vertrauen unserer Kunden und Stakeholder in unsere KI-Systeme.',
+            'Wir priorisieren Modellleistung gegenüber Interpretierbarkeit, wenn beides nicht gleichzeitig erreichbar ist.']}
   ]},
   {badge:'Abschnitt 4 - Herausforderungen',title:'Herausforderungen bei der Umsetzung',qs:[
-    {id:'lk2',t:'l',label:'Wie gross sind folgende Herausforderungen bei der Umsetzung des EU AI Acts?',
-     hint:'1 = keine Herausforderung     5 = sehr grosse Herausforderung',scale:['1','2','3','4','5'],
-     items:['Fehlende technische Normen fur Erklarbarkeit (z.B. ISO/IEC, CEN)',
+    {id:'lk2',t:'l',label:'Wie groß sind folgende Herausforderungen bei der Umsetzung des EU AI Acts?',
+     hint:'1 = keine Herausforderung     5 = sehr große Herausforderung',scale:['1','2','3','4','5'],
+     items:['Fehlende technische Normen fur Erklärbarkeit (z.B. ISO/IEC, CEN)',
             'Unklare oder interpretationsoffene rechtliche Anforderungen im Gesetzestext',
             'Mangelndes internes Fachwissen zu KI-Regulierung und Compliance',
-            'Hoher Aufwand fur technische Dokumentation und Konformitatsbewertung',
-            'Fehlende Software-Tools zur Unterstutzung der Compliance',
-            'Wirtschaftliche Kosten der Compliance im Verhaltnis zum Nutzen',
-            'Fehlende Ressourcen (Personal, Budget, Zeit) fur die Umsetzung']},
-    {id:'barrier',t:'r',req:true,label:'Was ist die grosste einzelne Hurde bei der EU AI Act-Compliance?',
-     opts:['Technisch: Erklarbarkeit bei komplexen KI-Modellen nicht realisierbar','Ressourcen: Unzureichendes Budget, Personal oder Zeit','Rechtlich: Unklare und interpretationsoffene Anforderungen','Organisatorisch: Fehlende interne Governance-Strukturen','Zeitlich: Zu kurze Umsetzungsfristen bei hohem Aufwand','Wissen: Unzureichendes Fachwissen zu regulatorischen Anforderungen','Keine wesentliche Hurde - Compliance ist gut handhabbar']},
-    {id:'support',t:'c',label:'Welche Unterstutzung wurde Ihrem Unternehmen am meisten helfen? (Mehrfachauswahl)',
-     opts:['Klare technische Normen und Standards (z.B. harmonisierte EU-Normen)','Praxisnahe Leitfaden mit konkreten Implementierungsbeispielen','Offizielle Leitlinien der zustandigen Behorden','Externe Fachberatung durch Rechts- und KI-Experten','Weiterbildungsangebote und Schulungen fur Mitarbeitende','Spezialisierte Software-Tools zur Konformitatsbewertung','Branchenspezifische Austauschformate (z.B. Arbeitsgruppen)','Keine zusatzliche Unterstutzung notwendig']}
+            'Hoher Aufwand für technische Dokumentation und Konformitätsbewertung',
+            'Fehlende Software-Tools zur Unterstützung der Compliance',
+            'Wirtschaftliche Kosten der Compliance im Verhältnis zum Nutzen',
+            'Fehlende Ressourcen (Personal, Budget, Zeit) für die Umsetzung']},
+    {id:'barrier',t:'r',req:true,label:'Was ist die größte einzelne Hürde bei der EU AI Act-Compliance?',
+     opts:['Technisch: Erklärbarkeit bei komplexen KI-Modellen nicht realisierbar','Ressourcen: Unzureichendes Budget, Personal oder Zeit','Rechtlich: Unklare und interpretationsoffene Anforderungen','Organisatorisch: Fehlende interne Governance-Strukturen','Zeitlich: Zu kurze Umsetzungsfristen bei hohem Aufwand','Wissen: Unzureichendes Fachwissen zu regulatorischen Anforderungen','Keine wesentliche Hürde - Compliance ist gut handhabbar']},
+    {id:'support',t:'c',label:'Welche Unterstützung würde Ihrem Unternehmen am meisten helfen? (Mehrfachauswahl)',
+     opts:['Klare technische Normen und Standards (z.B. harmonisierte EU-Normen)','Praxisnahe Leitfaden mit konkreten Implementierungsbeispielen','Offizielle Leitlinien der zuständigen Behörden','Externe Fachberatung durch Rechts- und KI-Experten','Weiterbildungsangebote und Schulungen für Mitarbeitende','Spezialisierte Software-Tools zur Konformitätsbewertung','Branchenspezifische Austauschformate (z.B. Arbeitsgruppen)','Keine zusätzliche Unterstützung notwendig']}
   ]},
-  {badge:'Abschnitt 5 - Ausblick',title:'Personliche Einschatzungen',qs:[
-    {id:'feas',t:'r',req:true,label:'Halten Sie es fur technisch realisierbar, die Transparenzanforderungen des EU AI Acts fur tiefe neuronale Netze vollstandig zu erfullen?',
-     opts:['Ja, vollstandig realisierbar - mit bestehenden XAI-Methoden bereits moglich','Weitgehend realisierbar - fur die meisten Anwendungsfalle umsetzbar','Teilweise realisierbar - nur fur einfachere Modelle und Anwendungen','Nur mit Kompromissen - Erklarbarkeit erfordert Einbussen bei der Modellleistung','Nicht vollstandig realisierbar - grundlegendes technisches Dilemma bleibt','Weiss nicht / keine Einschatzung moglich']},
+  {badge:'Abschnitt 5 - Ausblick',title:'Persönliche Einschätzungen',qs:[
+    {id:'feas',t:'r',req:true,label:'Halten Sie es für technisch realisierbar, die Transparenzanforderungen des EU AI Acts für tiefe neuronale Netze vollständig zu erfüllen?',
+     opts:['Ja, vollständig realisierbar - mit bestehenden XAI-Methoden bereits möglich','Weitgehend realisierbar - fur die meisten Anwendungsfälle umsetzbar','Teilweise realisierbar - nur für einfachere Modelle und Anwendungen','Nur mit Kompromissen - Erklärbarkeit erfordert Einbussen bei der Modellleistung','Nicht vollständig realisierbar - grundlegendes technisches Dilemma bleibt','Weiss ich nicht / keine Einschätzung möglich']},
     {id:'opinion',t:'r',req:true,label:'Wie bewerten Sie den EU AI Act insgesamt?',
-     opts:['Sehr positiv - notwendige Regulierung, die Vertrauen und Qualitat fordert','Positiv - richtige Richtung, aber teilweise zu komplex und unpraktikabel','Neutral - weder besonders positiv noch negativ','Negativ - hemmt Innovation ohne ausreichenden gesellschaftlichen Mehrwert','Sehr negativ - unverhaltsnismassige Belastung fur Unternehmen']},
-    {id:'lk3',t:'l',label:'Wie schatzen Sie die zukunftige Entwicklung ein?',
+     opts:['Sehr positiv - notwendige Regulierung, die Vertrauen und Qualität fordert','Positiv - richtige Richtung, aber teilweise zu komplex und unpraktikabel','Neutral - weder besonders positiv noch negativ','Negativ - hemmt Innovation ohne ausreichenden gesellschaftlichen Mehrwert','Sehr negativ - unverhältsnismäßige Belastung für Unternehmen']},
+    {id:'lk3',t:'l',label:'Wie schätzen Sie die zukünftige Entwicklung ein?',
      hint:'1 = stimme gar nicht zu     5 = stimme voll zu',scale:['1','2','3','4','5'],
-     items:['Erklarbare KI (XAI) wird in den nachsten 3 Jahren zum Industriestandard in unserer Branche.',
-            'Der EU AI Act wird langfristig die Qualitat und Sicherheit von KI-Systemen in der EU verbessern.',
+     items:['Erklärbare KI (XAI) wird in den nächsten 3 Jahren zum Industriestandard in unserer Branche.',
+            'Der EU AI Act wird langfristig die Qualität und Sicherheit von KI-Systemen in der EU verbessern.',
             'Unternehmen ohne EU AI Act-Compliance werden erhebliche Wettbewerbsnachteile haben.',
-            'Die Anforderungen des EU AI Acts werden in 5 Jahren technisch vollstandig erfullbar sein.']},
-    {id:'comment',t:'ta',label:'Haben Sie weitere Anmerkungen oder Einschatzungen?',ph:'Ihre Anmerkungen (optional)...'}
+            'Die Anforderungen des EU AI Acts werden in 5 Jahren technisch vollständig erfüllbar sein.']},
+    {id:'comment',t:'ta',label:'Haben Sie weitere Anmerkungen oder Einschätzungen?',ph:'Ihre Anmerkungen (optional)...'}
   ]}
 ];
 
