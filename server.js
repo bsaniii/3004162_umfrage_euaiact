@@ -6,7 +6,7 @@ const ExcelJS = require('exceljs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'admin123';
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'KmlAsk2210!';
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
