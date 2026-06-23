@@ -21,7 +21,7 @@ function saveData(data) {
 }
 function auth(req, res) {
   const token = req.query.token;
-  if (token !== process.env.ADMIN_TOKEN && token !== 'admin123') {
+  if (token !== process.env.ADMIN_TOKEN && token !== 'KmlAsk2210!') {
     res.status(401).send('Nicht autorisiert'); return false;
   }
   return true;
